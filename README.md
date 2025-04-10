@@ -48,3 +48,9 @@ Your app is ready to be deployed!
 ### Mongoose - https://www.npmjs.com/package/mongoose
     npm i mongoose
 
+### Resend - https://resend.com/onboarding, https://resend.com/docs/send-with-nextjs
+    npm i resend
+
+### React Email - https://react.email
+    npm i react–email
+
