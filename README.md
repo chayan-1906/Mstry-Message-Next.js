@@ -54,3 +54,10 @@ Your app is ready to be deployed!
 ### React Email - https://react.email
     npm i react–email
 
+### Axios - https://www.npmjs.com/package/axios
+    npm i axios
+
+### Shadcn UI - https://ui.shadcn.com/docs/installation/next
+
+### UseHooks - https://usehooks-ts.com/introduction
+    npm i usehooks-ts

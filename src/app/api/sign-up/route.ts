@@ -3,6 +3,7 @@ import UserModel from "@/model/User";
 import bcrypt from 'bcryptjs';
 import {sendVerificationEmail} from "@/helpers/sendVerificationEmail";
 import {ApiResponse} from "@/types/ApiResponse";
+import {generateRandomCode} from "@/lib/utils";
 
 /** SIGN UP */
 export async function POST(request: Request) {
@@ -24,7 +25,7 @@ export async function POST(request: Request) {
         }
 
         const existingUserByEmail = await UserModel.findOne({email});
-        const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
+        const verifyCode = generateRandomCode();
         if (existingUserByEmail) {
             if (existingUserByEmail.isVerified) {
                 return Response.json(<ApiResponse>{

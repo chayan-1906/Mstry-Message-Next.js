@@ -3,6 +3,7 @@ import {Inter} from "next/font/google";
 import "./globals.css";
 import React from "react";
 import AuthProvider from "@/context/AuthProvider";
+import {Toaster} from "@/components/ui/sonner";
 
 const inter = Inter({subsets: ['latin']});
 
@@ -17,6 +18,7 @@ function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
       <AuthProvider>
           <body className={inter.className}>
           {children}
+          <Toaster/>
           </body>
       </AuthProvider>
       </html>
