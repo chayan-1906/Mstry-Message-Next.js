@@ -10,9 +10,9 @@ export async function sendVerificationEmail(email: string, username: string, ver
             subject: 'Mstry Message | Verification code',
             react: VerificationEmail({username, otp: verifyCode}),
         });
-        return {success: true, message: 'Verification email sent successfully!'};
+        return {code: 'emailSent', success: true, message: 'Verification email sent successfully!'};
     } catch (error) {
         console.error('Error in sendingVerificationEmail', error);
-        return {success: false, message: 'Failed to send verification email!'};
+        return {code: 'emailSendFailed', success: false, message: 'Failed to send verification email!', error};
     }
 }
