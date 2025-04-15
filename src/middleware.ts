@@ -15,9 +15,11 @@ export async function middleware(request: NextRequest) {
         url.pathname.startsWith(routes.verifyPath()) ||
         url.pathname === routes.homePath
     )) {
-        return NextResponse.redirect(new URL(routes.dashboardPath, request.url))
+        return NextResponse.redirect(new URL(routes.dashboardPath, request.url));
     }
-    if (!token && url.pathname.startsWith(routes.dashboardPath)) {
+    if (!token && url.pathname.startsWith('/dashboard')) {
+        console.log('token:', token);
+        console.log(url.pathname);
         return NextResponse.redirect(new URL(routes.signInPath, request.url));
     }
 
@@ -34,3 +36,4 @@ export const config = {
         `${routes.dashboardPath}/:path*`,
     ],
 }
+

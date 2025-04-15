@@ -61,3 +61,6 @@ Your app is ready to be deployed!
 
 ### UseHooks - https://usehooks-ts.com/introduction
     npm i usehooks-ts
+
+### Embla Carousel Autoplay - https://www.npmjs.com/package/embla-carousel-autoplay
+    npm i embla-carousel-autoplay

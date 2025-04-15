@@ -2,10 +2,9 @@ import dbConnect from "@/lib/dbConnect";
 import {getServerSession, User} from "next-auth";
 import {authOptions} from "@/app/api/auth/[...nextauth]/options";
 import {ApiResponse} from "@/types/ApiResponse";
-import mongoose from "mongoose";
 import UserModel from "@/model/User";
 
-export async function GET(request: Request) {
+export async function DELETE(request: Request, {params}: { params: { messageId: string; } }) {
     await dbConnect();
 
     const session = await getServerSession(authOptions);
@@ -19,34 +18,32 @@ export async function GET(request: Request) {
         }, {status: 401});
     }
 
-    const userId = new mongoose.Types.ObjectId(user._id);
+    const {messageId} = params || {};
 
     try {
-        const user = await UserModel.aggregate([
-            {$match: {id: userId}},
-            {$unwind: 'messages'},
-            {$sort: {'messages.createdAt': -1}},
-            {$group: {_id: '$_id', messages: {$push: '$messages'}}},
-        ]);
-        if (!user || user.length === 0) {
+        const updatedUser = await UserModel.updateOne(
+            {_id: user._id},
+            {$pull: {messages: {_id: messageId}}}
+        );
+        if (updatedUser.modifiedCount === 0) {
             return Response.json(<ApiResponse>{
-                code: 'userNotFound',
+                code: 'messageNotFound',
                 success: false,
-                message: 'User not found',
+                message: 'Message not found',
             }, {status: 404});
         }
 
         return Response.json(<ApiResponse>{
-            code: 'messagesRetrieved',
+            code: 'deleted',
             success: true,
-            messages: user[0].messages,
+            message: 'Message deleted successfully',
         }, {status: 200});
     } catch (error: any) {
-        console.error('Failed to get user status to accept messages', error);
+        console.error('Failed to delete message', error);
         return Response.json(<ApiResponse>{
             code: 'unknownError',
             success: false,
-            message: 'Error in getting message acceptance status',
+            message: 'Error in deleting message',
             error,
         }, {status: 500});
     }
